@@ -5,6 +5,7 @@ import curso.sprigframework.spring5webapp.model.Book;
 import curso.sprigframework.spring5webapp.model.Publisher;
 import curso.sprigframework.spring5webapp.repositories.AuthorRepository;
 import curso.sprigframework.spring5webapp.repositories.BookRepository;
+import curso.sprigframework.spring5webapp.repositories.PublisherRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -13,10 +14,12 @@ public class BootstrapData implements CommandLineRunner {
 
     private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
+    private final PublisherRepository publisherRepository;
 
-    public BootstrapData(AuthorRepository authorRepository, BookRepository bookRepository) {
+    public BootstrapData(AuthorRepository authorRepository, BookRepository bookRepository, PublisherRepository publisherRepository) {
         this.authorRepository = authorRepository;
         this.bookRepository = bookRepository;
+        this.publisherRepository = publisherRepository;
     }
 
     @Override
@@ -46,6 +49,8 @@ public class BootstrapData implements CommandLineRunner {
         editora01.getPublisherBooks().add(livroPedro);
         livroJoao.setPublisher(editora01);
         livroPedro.setPublisher(editora01);
+
+        publisherRepository.save(editora01);
 
         System.out.println("a editora " + editora01.getName() + " tem "
                 + editora01.getPublisherBooks().stream().count() + " livros publicados");
